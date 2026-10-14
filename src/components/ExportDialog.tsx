@@ -95,11 +95,12 @@ export function ExportDialog({
     document.querySelectorAll("[data-export-page]").length,
   );
   useEffect(() => {
-    const root = document.querySelector(".resume-pages");
+    const root = document.querySelector(".editor-preview");
     if (!root) return;
-    const observer = new MutationObserver(() =>
-      setCount(document.querySelectorAll("[data-export-page]").length),
-    );
+    const updateCount = () =>
+      setCount(root.querySelectorAll("[data-export-page]").length);
+    updateCount();
+    const observer = new MutationObserver(updateCount);
     observer.observe(root, { childList: true, subtree: true });
     return () => observer.disconnect();
   }, []);
